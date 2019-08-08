@@ -12,12 +12,20 @@ class Ticket:
         self.destination = destination
 
 
-def reconstruct_trip(tickets, length):
-    hashtable = HashTable(length)
-    route = [None] * length
+def recurse(ht, route, dest):
+    route.append(dest)
 
-    """
-    YOUR CODE HERE
-    """
+    if dest != "NONE":
+        recurse(ht, route, hash_table_retrieve(ht, dest))
+
+
+def reconstruct_trip(tickets, length):
+    ht = HashTable(length)
+    route = []
+
+    for ticket in tickets:
+        hash_table_insert(ht, ticket.source, ticket.destination)
+
+    recurse(ht, route, hash_table_retrieve(ht, "NONE"))
 
     return route
